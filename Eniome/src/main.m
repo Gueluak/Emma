@@ -44,19 +44,21 @@ int main(int argc, char **argv){
 	al_init_image_addon();
 	env.allegroDisplay = al_create_display(1900, 1000);
 	al_install_keyboard();
+	al_install_mouse();
 	env.keybord = al_get_keyboard_event_source();
-	env.timer = al_create_timer(0.02);
+	env.timer = al_create_timer(0.01);
 	al_start_timer(env.timer);
 	env.eventQueue = al_create_event_queue();
 	env.key = malloc(1000);
 	env.event = malloc(1000);
 	al_register_event_source(env.eventQueue, env.keybord);
 	al_register_event_source(env.eventQueue, al_get_timer_event_source(env.timer));
+	al_register_event_source(env.eventQueue, al_get_mouse_event_source());
 	env.img = al_load_bitmap("/home/gueluak/Emma/Eniome/data/test.bmp");
 	env.img_pos.x = 0; env.img_pos.y = 0;
 	while (1){
 		al_wait_for_event(env.eventQueue, env.event);
-		// printf("%d\n", env.event->type);
+		printf("%d\n", env.event->type);
 		switch (env.event->type) {
 			case 30:
 				eniome_main_loop();
